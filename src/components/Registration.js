@@ -1,5 +1,7 @@
+import axios from 'axios';
 import React, {Component, Fragment} from 'react';
 import {Text, View} from 'react-native';
+import deviceStorage from '../services/deviceStorage';
 import {Button, Input, Loading, TextLink} from './common';
 
 class Registration extends Component {
@@ -12,6 +14,41 @@ class Registration extends Component {
       error: '',
       loading: false,
     };
+
+    this.registerUser = this.registerUser.bind(this);
+    this.onRegistrationFail = this.onRegistrationFail.bind(this);
+  }
+
+  registerUser() {
+    const {email, password, password_confirmation} = this.state;
+
+    this.setState({error: '', loading: true});
+
+    // NOTE Post to HTTPS only in production
+    axios
+      .post('http://localhost:4000/api/v1/sign_up', {
+        user: {
+          email: email,
+          password: password,
+          password_confirmation: password_confirmation,
+        },
+      })
+      .then((response) => {
+        console.log(response.data.token);
+        deviceStorage.saveKey('id_token', response.data.token);
+        this.props.newJWT(response.data.token);
+      })
+      .catch((error) => {
+        console.log(error);
+        this.onRegistrationFail();
+      });
+  }
+
+  onRegistrationFail() {
+    this.setState({
+      error: 'Registration Failed',
+      loading: false,
+    });
   }
 
   render() {
