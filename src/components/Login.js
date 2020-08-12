@@ -19,7 +19,7 @@ class Login extends Component {
   }
 
   loginUser() {
-    const {email, password, password_confirmation} = this.state;
+    const {email, password} = this.state;
 
     this.setState({error: '', loading: true});
 
