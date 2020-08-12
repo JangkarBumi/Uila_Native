@@ -8,8 +8,8 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: 'zeha@mail.com',
-      password: '123456',
+      email: '',
+      password: '',
       error: '',
       loading: false,
     };
@@ -30,7 +30,6 @@ class Login extends Component {
         password: password,
       })
       .then((response) => {
-        console.log(response.data.token);
         deviceStorage.saveKey('id_token', response.data.token);
         this.props.newJWT(response.data.token);
       })
