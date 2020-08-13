@@ -3,7 +3,7 @@ import {Button, TextInput, View} from 'react-native';
 import {connect} from 'react-redux';
 import {login} from '../actions/auth';
 
-const Login = ({login}) => {
+const SignInScreen = ({login}) => {
   const [email, setEmail] = React.useState('zeha@mail.com');
   const [password, setPassword] = React.useState('123456');
 
@@ -25,4 +25,4 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, {login})(Login);
+export default connect(mapStateToProps, {login})(SignInScreen);
