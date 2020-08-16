@@ -4,8 +4,8 @@ import {connect} from 'react-redux';
 import {login} from '../actions/auth';
 
 const Login = ({login}) => {
-  const [email, setEmail] = React.useState('zeha@mail.com');
-  const [password, setPassword] = React.useState('123456');
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
 
   return (
     <View>

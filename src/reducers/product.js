@@ -19,13 +19,14 @@ const initialState = {
 };
 
 const products = (state = initialState, action) => {
-  const { type, payload } = action;
+  const {type, payload} = action;
   switch (type) {
     case GET_PRODUCTS:
       return {
         ...state,
         products: payload,
         filteredProducts: payload,
+        loading: false,
       };
     case FILTER_PRODUCT:
       return {
