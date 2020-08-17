@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import {
   ACCOUNT_DELETED,
   AUTH_ERROR,
@@ -9,8 +10,10 @@ import {
   USER_LOADED,
 } from '../actions/types';
 
+const getToken = async () => await AsyncStorage.getItem('token');
+
 const initialState = {
-  // token: localStorage.getItem('token'),
+  token: getToken()._W,
   isAuthenticated: null,
   loading: true,
   user: null,

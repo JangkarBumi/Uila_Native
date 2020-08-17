@@ -1,5 +1,26 @@
 import api from '../utils/api';
-import {LOGIN_FAIL, LOGIN_SUCCESS, USER_LOADED} from './types';
+import {
+  AUTH_ERROR,
+  LOGIN_FAIL,
+  LOGIN_SUCCESS,
+  LOGOUT,
+  USER_LOADED,
+} from './types';
+
+// Load User
+export const loadUser = () => async (dispatch) => {
+  try {
+    const res = await api.get('/users');
+    dispatch({
+      type: USER_LOADED,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: AUTH_ERROR,
+    });
+  }
+};
 
 // Login User
 export const login = (email, password) => async (dispatch) => {
@@ -13,23 +34,11 @@ export const login = (email, password) => async (dispatch) => {
 
     dispatch(loadUser());
   } catch (err) {
-    console.log(err);
-
     dispatch({
       type: LOGIN_FAIL,
     });
   }
 };
 
-// Load User
-export const loadUser = () => async (dispatch) => {
-  try {
-    const res = await api.get('/users');
-    dispatch({
-      type: USER_LOADED,
-      payload: res.data,
-    });
-  } catch (err) {
-    console.log(err);
-  }
-};
+// Logout
+export const logout = () => ({type: LOGOUT});

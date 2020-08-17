@@ -13,13 +13,11 @@ const store = createStore(
 
 let currentState = store.getState();
 
-console.log(currentState.auth.token);
-
 store.subscribe(() => {
   let previousState = currentState;
   currentState = store.getState();
   if (previousState.auth.token !== currentState.auth.token) {
-    const token = currentState.auth.token.toString();
+    const token = currentState.auth.token;
     setAuthToken(token);
   }
 });

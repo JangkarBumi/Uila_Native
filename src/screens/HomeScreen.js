@@ -1,19 +1,26 @@
 import * as React from 'react';
 import {Button, Text, View} from 'react-native';
+import {connect} from 'react-redux';
+import {logout} from '../actions/auth';
 import ProductList from '../components/ProductList';
 
-import {useSelector} from 'react-redux';
-const HomeScreen = () => {
-  const firstName = useSelector((state) => state.auth.user.firstName);
-  return (
+const HomeScreen = ({logout, auth: {isAuthenticated}}) => {
+  return isAuthenticated ? (
     <View>
-      <Text>Signed in!</Text>
-      <Text>Welcome! {firstName}</Text>
+      <Text>Welcome!</Text>
 
-      <Button title="Sign out" onPress={() => console.log('Logout')} />
+      <Button title="Sign out" onPress={() => logout()} />
+      <ProductList />
+    </View>
+  ) : (
+    <View>
       <ProductList />
     </View>
   );
 };
 
-export default HomeScreen;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, {logout})(HomeScreen);
